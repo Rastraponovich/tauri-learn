@@ -27,7 +27,7 @@ const PostEntry = ({ id, onClick }: PostEntryProps) => {
   });
 
   return (
-    <div className="flex flex-col p-2 shadow-md  rounded-md gap-2" onClick={onClick}>
+    <div className="flex flex-col gap-2 rounded-md  p-2 shadow-md" onClick={onClick}>
       <span>{post.title}</span>
       <span className="text-sm font-light">{post.body}</span>
     </div>

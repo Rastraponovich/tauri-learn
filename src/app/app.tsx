@@ -4,7 +4,7 @@ import { HomePage } from "../pages/home/page";
 
 export const Application = () => {
   return (
-    <main className="h-screen container mx-auto flex flex-col gap-10 p-10 sm:p-6">
+    <main className="container mx-auto flex h-screen flex-col gap-10 p-10 sm:p-6">
       <HomePage />
       {/* <div className="p-4 flex items-center justify-center">
                 <img

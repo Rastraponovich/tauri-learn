@@ -1,39 +1,35 @@
-import { useList, useStoreMap, useUnit } from "effector-react"
-import { $posts, postGet } from "./model"
+import { useList, useStoreMap, useUnit } from "effector-react";
+
+import { $posts, postGet } from "./model";
 
 export const PostList = () => {
-    const handleClick = useUnit(postGet)
-    return (
-        <div className="flex flex-col gap-2">
-            {useList($posts, {
-                fn: ({ id }) => (
-                    <PostEntry id={id} onClick={() => handleClick({ id })} />
-                ),
-                getKey: ({ id }) => id,
-            })}
-        </div>
-    )
-}
+  const handleClick = useUnit(postGet);
+  return (
+    <div className="flex flex-col gap-2">
+      {useList($posts, {
+        fn: ({ id }) => <PostEntry id={id} onClick={() => handleClick({ id })} />,
+        getKey: ({ id }) => id,
+      })}
+    </div>
+  );
+};
 
 interface PostEntryProps {
-    id: number
-    onClick(): void
+  id: number;
+  onClick(): void;
 }
 
 const PostEntry = ({ id, onClick }: PostEntryProps) => {
-    const post = useStoreMap({
-        store: $posts,
-        keys: [id],
-        fn: (posts) => posts.find((post) => post.id === id)!,
-    })
+  const post = useStoreMap({
+    store: $posts,
+    keys: [id],
+    fn: (posts) => posts.find((post) => post.id === id)!,
+  });
 
-    return (
-        <div
-            className="flex flex-col p-2 shadow-md  rounded-md gap-2"
-            onClick={onClick}
-        >
-            <span>{post.title}</span>
-            <span className="text-sm font-light">{post.body}</span>
-        </div>
-    )
-}
+  return (
+    <div className="flex flex-col p-2 shadow-md  rounded-md gap-2" onClick={onClick}>
+      <span>{post.title}</span>
+      <span className="text-sm font-light">{post.body}</span>
+    </div>
+  );
+};

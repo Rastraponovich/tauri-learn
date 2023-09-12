@@ -1,4 +1,4 @@
-import { attach, createEffect, createStore, sample } from "effector"
+import { attach, createEvent, createStore, sample } from "effector"
 import { api } from "../../shared/api"
 import type { Post } from "../../shared/api/rest/posts"
 
@@ -7,7 +7,13 @@ const postsGetFx = attach({
     mapParams: () => ({ limit: 10 }),
 })
 
-export const postsGet = createEffect()
+const postGetFx = attach({
+    effect: api.posts.postGetFx,
+})
+
+export const postsGet = createEvent()
+
+export const postGet = createEvent<{ id: number }>()
 
 export const $posts = createStore<Post[]>([])
 
@@ -17,3 +23,8 @@ sample({
 })
 
 $posts.on(postsGetFx.doneData, (_, posts) => posts)
+
+sample({
+    clock: postGet,
+    target: postGetFx,
+})

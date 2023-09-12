@@ -8,7 +8,7 @@ import { Provider } from "effector-react"
 const root = document.getElementById("root") as HTMLElement
 
 const scope = fork()
-await allSettled(postsGet, { scope, params: {} })
+await allSettled(postsGet, { scope })
 
 createRoot(root).render(
     <Provider value={scope}>

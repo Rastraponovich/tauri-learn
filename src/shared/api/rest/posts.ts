@@ -11,10 +11,18 @@ export type Post = {
 export const postsGetFx = createEffect<{ limit?: number }, Post[]>(
     async ({ limit = 10 }) => {
         const response = await requestFx({
-            url: "https://jsonplaceholder.typicode.com/posts",
+            url: "/posts",
             query: { _limit: limit.toString() },
         })
 
         return response as Post[]
     }
 )
+
+export const postGetFx = createEffect<{ id: number }, Post>(async ({ id }) => {
+    const response = await requestFx({
+        url: `/posts/${id}`,
+    })
+
+    return response as Post
+})

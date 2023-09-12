@@ -1,4 +1,5 @@
 import { createEffect } from "effector"
+import { URL } from "../env"
 
 export const requestFx = createEffect<
     {
@@ -8,7 +9,7 @@ export const requestFx = createEffect<
     },
     unknown
 >(async ({ url, method = "GET", query }) => {
-    const path = `${url}${
+    const path = `${URL}${url}${
         query ? `?${new URLSearchParams(query).toString()}` : ""
     }`
 

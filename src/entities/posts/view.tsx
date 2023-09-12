@@ -1,11 +1,14 @@
-import { useList, useStoreMap } from "effector-react"
-import { $posts } from "./model"
+import { useList, useStoreMap, useUnit } from "effector-react"
+import { $posts, postGet } from "./model"
 
 export const PostList = () => {
+    const handleClick = useUnit(postGet)
     return (
         <div className="flex flex-col gap-2">
             {useList($posts, {
-                fn: ({ id }) => <PostEntry id={id} />,
+                fn: ({ id }) => (
+                    <PostEntry id={id} onClick={() => handleClick({ id })} />
+                ),
                 getKey: ({ id }) => id,
             })}
         </div>
@@ -14,9 +17,10 @@ export const PostList = () => {
 
 interface PostEntryProps {
     id: number
+    onClick(): void
 }
 
-const PostEntry = ({ id }: PostEntryProps) => {
+const PostEntry = ({ id, onClick }: PostEntryProps) => {
     const post = useStoreMap({
         store: $posts,
         keys: [id],
@@ -24,7 +28,10 @@ const PostEntry = ({ id }: PostEntryProps) => {
     })
 
     return (
-        <div className="flex flex-col p-2 shadow-md  rounded-md gap-2">
+        <div
+            className="flex flex-col p-2 shadow-md  rounded-md gap-2"
+            onClick={onClick}
+        >
             <span>{post.title}</span>
             <span className="text-sm font-light">{post.body}</span>
         </div>

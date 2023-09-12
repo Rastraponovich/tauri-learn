@@ -1,23 +1,9 @@
-// import { PostList } from "../entities/posts"
-// import Logo from "../assets/react.svg"
-import { HomePage } from "../pages/home/page";
+import { RoutesView } from "../pages";
 
 export const Application = () => {
   return (
     <main className="container mx-auto flex h-screen flex-col gap-10 p-10 sm:p-6">
-      <HomePage />
-      {/* <div className="p-4 flex items-center justify-center">
-                <img
-                    src={Logo}
-                    alt="Logo"
-                    height={300}
-                    width={300}
-                    className="animate-pulse"
-                />
-            </div>
-            <section className="flex flex-col gap-4">
-                <PostList />
-            </section> */}
+      <RoutesView />
     </main>
   );
 };

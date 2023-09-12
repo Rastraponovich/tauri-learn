@@ -15,8 +15,6 @@ export const router = createHistoryRouter({
   controls,
 });
 
-export const $currentPage = router.$path.map((state) => state);
-
 sample({
   clock: appStarted,
   fn: () => createBrowserHistory(),

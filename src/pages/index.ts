@@ -6,8 +6,6 @@ const pages = import.meta.glob<true, string, { default: RouteRecord<object, obje
 );
 
 const routes = Object.values(pages).map((page) => {
-  console.log(pages, page);
-
   return page.default;
 });
 

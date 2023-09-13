@@ -1,1 +1,1 @@
-export { PostCreateButton } from "./view";
+export { PostCreateButton, PostCreateForm } from "./view";

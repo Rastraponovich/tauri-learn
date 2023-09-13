@@ -47,3 +47,10 @@ export const postCreateFx = createEffect<{ title: string; body: string }, Post>(
     return response as Post;
   },
 );
+
+export const postDeleteFx = createEffect<{ id: number }, void>(async ({ id }) => {
+  await requestFx({
+    url: `/posts/${id}`,
+    method: "DELETE",
+  });
+});

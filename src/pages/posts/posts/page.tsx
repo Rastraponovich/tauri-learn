@@ -3,6 +3,9 @@ import type { ChangeEvent } from "react";
 
 import { MainLayout } from "~/layouts/main-layout";
 
+import { PostCreateButton } from "~/features/posts/create";
+import { PostCreateForm } from "~/features/posts/create/view";
+
 import { $pending, $posts, limitChanged, postCardClicked } from "./model";
 
 export const PostsPage = () => {
@@ -12,8 +15,8 @@ export const PostsPage = () => {
   };
 
   return (
-    <MainLayout>
-      <main className="flex grow flex-col gap-10  p-8 text-center">
+    <MainLayout actions={<PostCreateButton />}>
+      <main className="relative flex grow flex-col  gap-10 p-8 text-center">
         <header className="flex flex-col gap-2">
           <div className="flex items-center justify-between gap-4">
             {pending && <div>Loading...</div>}
@@ -33,6 +36,7 @@ export const PostsPage = () => {
         </header>
 
         <PostList />
+        <PostCreateForm />
       </main>
     </MainLayout>
   );

@@ -35,3 +35,15 @@ export const postSaveFx = createEffect<Post, Post>(async (post) => {
 
   return response as Post;
 });
+
+export const postCreateFx = createEffect<{ title: string; body: string }, Post>(
+  async ({ title, body }) => {
+    const response = await requestFx({
+      url: "/posts",
+      method: "POST",
+      body: JSON.stringify({ title, body }),
+    });
+
+    return response as Post;
+  },
+);

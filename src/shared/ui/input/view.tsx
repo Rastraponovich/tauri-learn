@@ -33,7 +33,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
     };
     return (
       <label htmlFor="" className="flex grow flex-col gap-2">
-        {label && <span>{label}</span>}
+        {label && <span className="text-left text-sm font-normal">{label}</span>}
         <textarea
           ref={ref}
           {...restProps}
@@ -67,7 +67,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     };
     return (
       <label htmlFor="" className="flex flex-col gap-2">
-        {label && <span>{label}</span>}
+        {label && <span className="text-left text-sm font-normal">{label}</span>}
         <input
           ref={ref}
           disabled={pending || disabled}

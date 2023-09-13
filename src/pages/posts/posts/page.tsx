@@ -1,6 +1,8 @@
 import { useList, useStoreMap, useUnit } from "effector-react";
 import type { ChangeEvent } from "react";
 
+import { MainLayout } from "~/layouts/main-layout";
+
 import { $pending, $posts, limitChanged, postCardClicked } from "./model";
 
 export const PostsPage = () => {
@@ -10,27 +12,29 @@ export const PostsPage = () => {
   };
 
   return (
-    <section className="flex grow flex-col gap-10  text-center">
-      <header className="flex flex-col gap-2">
-        <div className="flex items-center justify-between gap-4">
-          {pending && <div>Loading...</div>}
-          <div className="grow"></div>
-          <label className="flex items-center gap-2 self-end">
-            <span>posts per page: </span>
-            <select onChange={handleChange}>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </label>
-        </div>
+    <MainLayout>
+      <main className="flex grow flex-col gap-10  p-8 text-center">
+        <header className="flex flex-col gap-2">
+          <div className="flex items-center justify-between gap-4">
+            {pending && <div>Loading...</div>}
+            <div className="grow"></div>
+            <label className="flex items-center gap-2 self-end">
+              <span>posts per page: </span>
+              <select onChange={handleChange}>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </label>
+          </div>
 
-        <h1 className="text-bold text-3xl">Posts List</h1>
-      </header>
+          <h1 className="text-bold text-3xl">Posts List</h1>
+        </header>
 
-      <PostList />
-    </section>
+        <PostList />
+      </main>
+    </MainLayout>
   );
 };
 

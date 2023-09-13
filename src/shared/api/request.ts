@@ -7,13 +7,20 @@ export const requestFx = createEffect<
     url: string;
     method?: string;
     query?: { _limit?: string; _page?: string; _search?: string };
+    body?: string;
   },
   unknown
->(async ({ url, method = "GET", query }) => {
+>(async ({ url, method = "GET", query, body }) => {
   const path = `${URL}${url}${query ? `?${new URLSearchParams(query).toString()}` : ""}`;
 
+  const headers = new Headers();
+
+  headers.set("Content-Type", "application/json");
+
   const res = await fetch(path, {
+    headers,
     method,
+    body,
   });
 
   return await res.json();

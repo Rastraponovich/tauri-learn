@@ -17,7 +17,7 @@ export const MainLayout = ({ children, actions }: MainLayoutProps) => {
             <li>
               <Link
                 to={routes.home}
-                activeClassName="text-orange-500"
+                activeClassName="text-blue-700"
                 className="flex items-center rounded-md border px-4 py-2 hover:border-blue-300 hover:text-blue-300 "
               >
                 Home
@@ -26,7 +26,7 @@ export const MainLayout = ({ children, actions }: MainLayoutProps) => {
             <li>
               <Link
                 to={routes.posts.posts}
-                activeClassName="text-orange-500"
+                activeClassName="text-blue-700"
                 className="flex items-center rounded-md border px-4 py-2 hover:border-blue-300 hover:text-blue-300 "
               >
                 Posts

@@ -1,5 +1,4 @@
-import { attach, createEvent, createStore, sample } from "effector";
-import { debug } from "patronum";
+import { attach, combine, createEvent, createStore, sample } from "effector";
 
 import { api } from "~/shared/api";
 
@@ -15,14 +14,18 @@ export const formSubmitted = createEvent<{ postId: number }>();
 export const $name = createStore("");
 export const $body = createStore("");
 
+const $comment = combine({
+  name: $name,
+  body: $body,
+  email: "Hayden@althea.biz",
+});
+
 $name.on(nameChanged, (_, name) => name);
 $body.on(bodyChanged, (_, body) => body);
 
-debug(nameChanged);
-
 sample({
   clock: formSubmitted,
-  source: { name: $name, body: $body },
-  fn: ({ name, body }, { postId }) => ({ comment: { name, body, postId } }),
+  source: { comment: $comment },
+  fn: ({ comment }, { postId }) => ({ comment: { ...comment, postId } }),
   target: commentCreateFx,
 });

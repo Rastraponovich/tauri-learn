@@ -24,7 +24,7 @@ export const commentCreateFx = createEffect<
   Comment
 >(async ({ comment }) => {
   const request = await requestFx({
-    url: `/comments`,
+    url: `/posts/${comment.postId}/comments`,
     method: "POST",
     body: JSON.stringify(comment),
   });

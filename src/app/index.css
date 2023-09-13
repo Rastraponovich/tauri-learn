@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+#root {
+  @apply grid h-screen grid-rows-[min-content_1fr_min-content];
+}

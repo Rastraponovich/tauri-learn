@@ -1,12 +1,14 @@
 import { useList, useStoreMap, useUnit } from "effector-react";
-import type { ChangeEvent } from "react";
+import { type ChangeEvent, MouseEvent, useCallback } from "react";
 
 import { MainLayout } from "~/layouts/main-layout";
 
 import { PostCreateButton } from "~/features/posts/create";
-import { PostCreateForm } from "~/features/posts/create/view";
+import { PostCreateForm } from "~/features/posts/create";
 
-import { $pending, $posts, limitChanged, postCardClicked } from "./model";
+import { Button } from "~/shared/ui/button";
+
+import { $pending, $posts, limitChanged, postCardClicked, postDeleteButtonClicked } from "./model";
 
 export const PostsPage = () => {
   const [handleLimitChanged, pending] = useUnit([limitChanged, $pending]);
@@ -43,11 +45,24 @@ export const PostsPage = () => {
 };
 
 const PostList = () => {
-  const handleClick = useUnit(postCardClicked);
+  const [handleClick, onDelete] = useUnit([postCardClicked, postDeleteButtonClicked]);
+
+  const handleDelete = useCallback((event: MouseEvent<HTMLButtonElement>, id: number) => {
+    event.stopPropagation();
+
+    onDelete({ id });
+  }, []);
+
   return (
     <div className="flex flex-col gap-2">
       {useList($posts, {
-        fn: ({ id }) => <PostEntry id={id} onClick={() => handleClick({ id })} />,
+        fn: ({ id }) => (
+          <PostEntry
+            id={id}
+            onClick={() => handleClick({ id })}
+            onDelete={(event) => handleDelete(event, id)}
+          />
+        ),
         getKey: ({ id }) => id,
       })}
     </div>
@@ -57,9 +72,10 @@ const PostList = () => {
 interface PostEntryProps {
   id: number;
   onClick(): void;
+  onDelete(event: MouseEvent<HTMLButtonElement>): void;
 }
 
-const PostEntry = ({ id, onClick }: PostEntryProps) => {
+const PostEntry = ({ id, onClick, onDelete }: PostEntryProps) => {
   const post = useStoreMap({
     store: $posts,
     keys: [id],
@@ -68,7 +84,11 @@ const PostEntry = ({ id, onClick }: PostEntryProps) => {
 
   return (
     <div className="flex flex-col gap-2 rounded-md  p-2 shadow-md" onClick={onClick}>
-      <span>{post.title}</span>
+      <div className="flex items-center justify-between">
+        <span>{post.title}</span>
+
+        <Button onClick={onDelete}>delete</Button>
+      </div>
       <span className="text-sm font-light">{post.body}</span>
     </div>
   );

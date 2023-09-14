@@ -6,6 +6,10 @@ export const routes = {
     posts: createRoute(),
     post: createRoute(),
   },
+  users: {
+    users: createRoute(),
+    user: createRoute(),
+  },
 };
 
 export const notFoundRoute = createRoute();
@@ -23,5 +27,13 @@ export const routesMap: UnmappedRouteObject<object>[] = [
   {
     path: "/posts/:id",
     route: routes.posts.post,
+  },
+  {
+    path: "/users",
+    route: routes.users.users,
+  },
+  {
+    path: "/users/:id",
+    route: routes.users.user,
   },
 ];

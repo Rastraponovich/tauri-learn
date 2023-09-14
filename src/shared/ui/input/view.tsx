@@ -66,7 +66,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       }
     };
     return (
-      <label htmlFor="" className="flex flex-col gap-2">
+      <label htmlFor="" className="flex w-full flex-col gap-2">
         {label && <span className="text-left text-sm font-normal">{label}</span>}
         <input
           ref={ref}
@@ -74,7 +74,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-disabled={pending || disabled}
           onChange={handleChange}
           className={clsx(
-            "rounded-md px-4 py-2 shadow-lg",
+            "w-full rounded-md px-4 py-2 shadow-lg",
             "disabled:border-transparent disabled:shadow-none",
             className,
           )}

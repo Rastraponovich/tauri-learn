@@ -15,7 +15,7 @@ export const requestFx = createEffect<
 
   const headers = new Headers();
 
-  headers.set("Content-Type", "application/json");
+  headers.set("Content-Type", "application/json; charset=UTF-8");
 
   const res = await fetch(path, {
     headers,

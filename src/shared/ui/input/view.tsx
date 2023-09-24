@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import {
-  ChangeEventHandler,
-  InputHTMLAttributes,
-  ReactNode,
+  type ChangeEventHandler,
+  type InputHTMLAttributes,
+  type ReactNode,
   type TextareaHTMLAttributes,
   forwardRef,
 } from "react";
@@ -55,7 +55,10 @@ interface InputProps extends BaseInputProps, InputHTMLAttributes<HTMLInputElemen
   pending?: boolean;
 }
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ disabled, pending, className, onChange, onValueChange, label, ...restProps }, ref) => {
+  (
+    { disabled, pending, className, onChange, onValueChange, type = "text", label, ...restProps },
+    ref,
+  ) => {
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       if (onValueChange) {
         return onValueChange(event.target.value);
@@ -70,12 +73,51 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && <span className="text-left text-sm font-normal">{label}</span>}
         <input
           ref={ref}
+          type={type}
           disabled={pending || disabled}
           aria-disabled={pending || disabled}
           onChange={handleChange}
           className={clsx(
-            "w-full rounded-md px-4 py-2 shadow-lg",
-            "disabled:border-transparent disabled:shadow-none",
+            "w-full rounded-md border px-4 py-2",
+            "disabled:border-transparent",
+            className,
+          )}
+          {...restProps}
+        />
+      </label>
+    );
+  },
+);
+
+interface NumberProps extends InputHTMLAttributes<HTMLInputElement> {
+  onValueChange?: (value: number) => void;
+  pending?: boolean;
+  label?: ReactNode;
+}
+
+export const Number = forwardRef<HTMLInputElement, NumberProps>(
+  ({ disabled, pending, className, onChange, onValueChange, label, ...restProps }, ref) => {
+    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+      if (onValueChange) {
+        return onValueChange(+event.target.value);
+      }
+
+      if (onChange) {
+        return onChange(event);
+      }
+    };
+    return (
+      <label htmlFor="" className="flex w-full flex-col gap-2">
+        {label && <span className="text-left text-sm font-normal">{label}</span>}
+        <input
+          ref={ref}
+          type={"number"}
+          disabled={pending || disabled}
+          aria-disabled={pending || disabled}
+          onChange={handleChange}
+          className={clsx(
+            "w-full rounded-md border px-4 py-2",
+            "disabled:border-transparent",
             className,
           )}
           {...restProps}

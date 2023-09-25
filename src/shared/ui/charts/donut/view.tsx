@@ -21,7 +21,7 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
     <Doughnut
       data={props.data}
       options={{
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         responsive: true,
 
         plugins: {
@@ -31,11 +31,14 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
             labels: {
               color: "#000",
               usePointStyle: true,
-              font: { size: 14, weight: "light", style: "oblique" },
+              font: { size: 14, weight: "light" },
             },
             title: {
               display: true,
               text: "Categories",
+              font: {
+                size: 16,
+              },
               color: "#000",
             },
           },

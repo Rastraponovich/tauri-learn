@@ -4,16 +4,20 @@ import { FormEvent } from "react";
 
 import { routes } from "~/shared/routing";
 import { Badge } from "~/shared/ui/bage";
+import { DonutChart } from "~/shared/ui/charts";
 import { Input, Number } from "~/shared/ui/input";
 
 import {
   $amount,
   $balance,
+  $categoriesList,
+  $categoriesSelected,
   $category,
   $date,
-  $transactions,
+  $transactionsFiltered,
   amountChanged,
   categoryChanged,
+  categorySelected,
   dateChanged,
   transactionSubmitted,
 } from "./model";
@@ -28,17 +32,13 @@ export const HomePage = () => {
         </Link>
       </header>
 
-      <section className="grid grid-cols-3">
+      <section className="grid grid-cols-2">
         <div>
           <Balance />
         </div>
-        <ul className="col-span-1 col-end-4">
-          <li>1. расходы</li>
-          <li>2. доходы</li>
-          <li>3. категории</li>
-          <li>4. фильтр по периодам</li>
-          <li>5. фильтр по категориям</li>
-        </ul>
+        <div>
+          <Chart />
+        </div>
       </section>
     </section>
   );
@@ -49,15 +49,8 @@ const Balance = () => {
 
   return (
     <article className="flex flex-col gap-2 rounded-md p-2 shadow-md">
-      <h2 className="text-3xl font-bold"> {balance} &#x20bd;</h2>
-      <div className="flex items-center gap-1 ">
-        <Badge>asdasd</Badge>
-        <Badge variant="error">asdasd</Badge>
-        <Badge size="sm">asdasd</Badge>
-        <Badge size="sm" variant="error">
-          asdasd
-        </Badge>
-      </div>
+      <h2 className="text-3xl font-bold after:content-['\20BD']"> {balance}</h2>
+      <Categories />
       <div className="flex flex-col gap-2">
         <TransactionForm />
         <TransactionList />
@@ -98,7 +91,7 @@ const TransactionForm = () => {
 const TransactionList = () => {
   return (
     <div className="flex flex-col gap-1">
-      {useList($transactions, {
+      {useList($transactionsFiltered, {
         fn: ({ id }) => <TransactionEntry id={id} />,
       })}
     </div>
@@ -110,7 +103,7 @@ interface TransactionEntryProps {
 }
 const TransactionEntry = ({ id }: TransactionEntryProps) => {
   const { amount, category, date } = useStoreMap({
-    store: $transactions,
+    store: $transactionsFiltered,
     keys: [id],
     fn: (transactions) => transactions.find((transaction) => transaction.id === id)!,
   });
@@ -119,7 +112,47 @@ const TransactionEntry = ({ id }: TransactionEntryProps) => {
       <span>{date}</span>
       <span className="font-bold after:content-['\20BD']">{amount}</span>
       <span className="grow"></span>
-      <span className="italic text-gray-500">{category}</span>
+      <Badge size="xs">{category}</Badge>
     </div>
   );
+};
+
+const Categories = () => {
+  const [categories, onClick, selected] = useUnit([
+    $categoriesList,
+    categorySelected,
+    $categoriesSelected,
+  ]);
+
+  return (
+    <div className="flex gap-1">
+      {Object.entries(categories).map(([name, sum]) => (
+        <Badge
+          key={name}
+          variant={sum < 0 ? "error" : "success"}
+          onClick={() => onClick(name)}
+          selected={selected.includes(name)}
+        >
+          {name}:{sum}
+        </Badge>
+      ))}
+    </div>
+  );
+};
+
+const Chart = () => {
+  const xx = useUnit($categoriesList);
+  const data = {
+    labels: Object.keys(xx),
+    datasets: [
+      {
+        data: Object.values(xx),
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
+  return <DonutChart data={data} />;
 };

@@ -2,17 +2,19 @@ import { Link } from "atomic-router-react";
 import { useList, useStoreMap, useUnit } from "effector-react";
 import { FormEvent } from "react";
 
+import { CategoriesSelect } from "~/entities/categories";
+
 import { routes } from "~/shared/routing";
 import { Badge } from "~/shared/ui/bage";
 import { DonutChart } from "~/shared/ui/charts";
-import { Input, Number } from "~/shared/ui/input";
+import { Number } from "~/shared/ui/input";
 
 import {
   $amount,
   $balance,
   $categoriesList,
   $categoriesSelected,
-  $category,
+  $charts,
   $date,
   $transactionsFiltered,
   amountChanged,
@@ -60,7 +62,7 @@ const Balance = () => {
 };
 
 const TransactionForm = () => {
-  const [date, amount, category] = useUnit([$date, $amount, $category]);
+  const [date, amount] = useUnit([$date, $amount]);
   const [onSubmit, handleChangeAmount, handleChangeCategory, handleDateChanged] = useUnit([
     transactionSubmitted,
     amountChanged,
@@ -77,12 +79,8 @@ const TransactionForm = () => {
     <form id="transaction-form" className="flex flex-col gap-2 rounded-md" onSubmit={handleSubmit}>
       <input type="date" value={date} onChange={(e) => handleDateChanged(e.target.value)} />
       <Number value={amount} onValueChange={handleChangeAmount} label="Amount" />
-      <Input
-        value={category}
-        onValueChange={handleChangeCategory}
-        placeholder="enter category"
-        label="Category"
-      />
+
+      <CategoriesSelect onChange={handleChangeCategory} />
       <button type="submit">submit</button>
     </form>
   );
@@ -112,7 +110,9 @@ const TransactionEntry = ({ id }: TransactionEntryProps) => {
       <span>{date}</span>
       <span className="font-bold after:content-['\20BD']">{amount}</span>
       <span className="grow"></span>
-      <Badge size="xs">{category}</Badge>
+      <Badge size="xs" style={{ backgroundColor: category.color }}>
+        {category.name}
+      </Badge>
     </div>
   );
 };
@@ -126,14 +126,14 @@ const Categories = () => {
 
   return (
     <div className="flex gap-1">
-      {Object.entries(categories).map(([name, sum]) => (
+      {Object.entries(categories).map(([name, category]) => (
         <Badge
           key={name}
-          variant={sum < 0 ? "error" : "success"}
-          onClick={() => onClick(name)}
-          selected={selected.includes(name)}
+          onClick={() => onClick(category.id)}
+          selected={selected.includes(category.id)}
+          style={{ backgroundColor: category.color }}
         >
-          {name}:{sum}
+          {name}:{category.amount}
         </Badge>
       ))}
     </div>
@@ -141,13 +141,14 @@ const Categories = () => {
 };
 
 const Chart = () => {
-  const xx = useUnit($categoriesList);
+  const reduced = useUnit($charts);
+
   const data = {
-    labels: Object.keys(xx),
+    labels: reduced.labels,
     datasets: [
       {
-        data: Object.values(xx),
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        data: reduced.data,
+        backgroundColor: reduced.backgroundColor,
         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
         hoverOffset: 4,
       },

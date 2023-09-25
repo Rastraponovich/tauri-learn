@@ -8,12 +8,8 @@ interface BadgeProps {
   selected?: boolean;
   variant?: "success" | "error";
   size?: "sm" | "md" | "xs" | "lg" | "xl";
+  style?: object;
 }
-
-const variants = {
-  success: "bg-green-600",
-  error: "bg-rose-600",
-};
 
 const sizes = {
   xs: "px-2 py-1 text-xs",
@@ -24,14 +20,14 @@ const sizes = {
 };
 
 export const Badge = forwardRef<HTMLDivElement, BadgeProps>(
-  ({ children, variant = "success", size = "md", onClick, selected }, ref) => {
+  ({ children, style, size = "md", onClick, selected }, ref) => {
     return (
       <div
         ref={ref}
         onClick={onClick}
+        style={style}
         className={clsx(
           "flex cursor-pointer items-center justify-center rounded-3xl text-white outline outline-offset-2 hover:outline-gray-200",
-          variants[variant],
           sizes[size],
           selected && "outline-blue-500",
         )}

@@ -5,6 +5,9 @@ import { t } from "i18next";
 import { FormEvent, memo } from "react";
 import { useTranslation } from "react-i18next";
 
+import { LangToggler } from "~/widgets/lang-switcher";
+import { ThemeToggler } from "~/widgets/theme-swither";
+
 import { CategoriesSelect } from "~/entities/categories";
 
 import { routes } from "~/shared/routing";
@@ -31,20 +34,14 @@ import {
 } from "./model";
 
 export const HomePage = () => {
-  const { i18n } = useTranslation();
-
-  const toggleLanguage = () => {
-    i18n.changeLanguage(i18n.language === "en" ? "ru" : "en");
-  };
+  const { t } = useTranslation();
   return (
     <>
       <header className="flex justify-end p-1">
-        <button
-          onClick={toggleLanguage}
-          className="flex h-10 w-10 items-center justify-center rounded-md border "
-        >
-          {i18n.language}
-        </button>
+        <div className="flex gap-2 ">
+          <LangToggler />
+          <ThemeToggler />
+        </div>
       </header>
       <section className="flex grow flex-col gap-10  text-center">
         <header>

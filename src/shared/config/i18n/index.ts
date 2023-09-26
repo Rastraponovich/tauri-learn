@@ -1,5 +1,8 @@
+import { createEffect, createEvent, sample } from "effector";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+
+import { appStarted } from "~/shared/init";
 
 // the translations
 // (tip move them in a JSON file and import them,
@@ -54,3 +57,38 @@ i18n
   });
 
 export default i18n;
+
+const checkLangFx = createEffect(async () => {
+  try {
+    const lang = localStorage.getItem("lang");
+    if (lang) {
+      i18n.changeLanguage(lang);
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+
+const langToggleFx = createEffect(async () => {
+  const lang = i18n.language === "en" ? "ru" : "en";
+  i18n.changeLanguage(lang);
+
+  try {
+    localStorage.setItem("lang", lang);
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+});
+export const langToggle = createEvent();
+
+sample({
+  clock: appStarted,
+  target: checkLangFx,
+});
+
+sample({
+  clock: langToggle,
+  target: langToggleFx,
+});

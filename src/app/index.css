@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #root {
-  @apply grid h-screen grid-rows-[min-content_1fr_min-content];
+  @apply grid h-screen grid-rows-[min-content_1fr_min-content] dark:bg-indigo-800 dark:text-white;
 }
 
 /* Chrome, Safari, Edge, Opera */

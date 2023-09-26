@@ -1,10 +1,12 @@
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import { t } from "i18next";
 import { forwardRef } from "react";
 import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface DonutChartProps {
+  title?: string;
   data: {
     labels: string[];
     datasets: {
@@ -35,7 +37,7 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
             },
             title: {
               display: true,
-              text: "Categories",
+              text: t(props.title || ""),
               font: {
                 size: 16,
               },

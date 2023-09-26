@@ -8,6 +8,18 @@ const resources = {
   en: {
     translation: {
       "Welcome to React": "Welcome to React and react-i18next",
+      Welcome: "Welcome to React and react-i18next",
+    },
+  },
+  ru: {
+    translation: {
+      "Welcome to React": "Добро пожаловать в React и react-i18next",
+      Welcome: "Добро пожаловать в React и react-i18next",
+      Amount: "Сумма",
+      "Select category": "Выберите категорию",
+      Categories: "Категории",
+      submit: "Отправить",
+      "click to start": "Нажмите, чтобы начать",
     },
   },
   fr: {

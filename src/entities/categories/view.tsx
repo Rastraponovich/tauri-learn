@@ -1,7 +1,9 @@
-import { useList, useStoreMap, useUnit } from "effector-react";
-import { ChangeEvent, FormEvent } from "react";
+import { useUnit } from "effector-react";
+import { t } from "i18next";
+import { type ElementType, type FormEvent, useCallback, useState } from "react";
 
 import { Input } from "~/shared/ui/input";
+import { Select, SelectTemplateProps } from "~/shared/ui/select";
 
 import {
   $categories,
@@ -36,51 +38,52 @@ export const CategoryForm = () => {
       className="flex flex-col gap-2 rounded-md p-4 shadow-md"
       onSubmit={handleSubmit}
     >
-      <h2>category</h2>
+      <h2>{t("category")}</h2>
 
-      <Input value={name} onValueChange={handleNameChange} label="Name" />
-      <Input value={color} onValueChange={handleColorChange} label="Color" type="color" />
+      <Input value={name} onValueChange={handleNameChange} label={t("Name")} />
+      <Input value={color} onValueChange={handleColorChange} label={t("Color")} type="color" />
 
       <CategoriesSelect onChange={handleSelect} />
 
-      <button type="submit">submit</button>
+      <button type="submit">{t("submit")}</button>
     </form>
   );
 };
 
 interface CategoriesSelectProps {
   onChange: (category: Category) => void;
+  templateProps?: Pick<SelectTemplateProps<Category>, "displayProperty" | "keyProperty"> & object;
+  template?: ElementType<SelectTemplateProps<Category>>;
 }
 
-export const CategoriesSelect = ({ onChange }: CategoriesSelectProps) => {
+export const CategoriesSelect = ({
+  onChange,
+  template: Template,
+  templateProps,
+}: CategoriesSelectProps) => {
   const categories = useUnit($categories);
 
-  const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const category = categories.find((category) => category.id === +event.target.value);
+  const [selected, setSelected] = useState({ id: 0, name: t("Select category"), color: "red" });
 
-    if (category) {
-      onChange(category);
-    }
-  };
+  const handleChange = useCallback(
+    (category: Category) => {
+      if (category) {
+        setSelected(category);
+        onChange(category);
+      }
+    },
+    [onChange],
+  );
 
   return (
-    <select onChange={handleChange}>
-      {useList($categories, {
-        fn: ({ id }) => <CategoryEntity id={id} />,
-      })}
-    </select>
+    <Select
+      items={categories}
+      displayProperty="name"
+      keyProperty="id"
+      selected={selected}
+      onSelect={handleChange}
+      template={Template}
+      templateProps={templateProps}
+    />
   );
-};
-
-interface CategoryEntityProps {
-  id: number;
-}
-
-const CategoryEntity = ({ id }: CategoryEntityProps) => {
-  const category = useStoreMap({
-    store: $categories,
-    keys: [id],
-    fn: (categories) => categories.find((category) => category.id === id)!,
-  });
-  return <option value={id}>{category.name}</option>;
 };

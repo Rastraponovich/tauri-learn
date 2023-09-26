@@ -1,6 +1,8 @@
 import { combine, createEvent, createStore, sample } from "effector";
 import { reset } from "patronum";
 
+import { CATEGORIES } from "./constants";
+
 export type Category = {
   id: number;
   name: string;
@@ -16,7 +18,7 @@ export const categoriesChanged = createEvent<Omit<Category, "id">>();
 export const $name = createStore("");
 export const $color = createStore("");
 
-export const $categories = createStore<Category[]>([]);
+export const $categories = createStore<Category[]>(CATEGORIES);
 
 $name.on(nameChanged, (_, name) => name);
 $color.on(colorChanged, (_, color) => color);

@@ -24,7 +24,7 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
       className="dark:text-white"
       data={props.data}
       options={{
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         responsive: true,
 
         plugins: {

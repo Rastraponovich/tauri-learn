@@ -6,14 +6,15 @@ import { Category } from "~/entities/categories/model";
 import { convertDateToString } from "~/shared/lib/dates";
 import { routes } from "~/shared/routing";
 
+import { addDays } from "./helpers";
+
 export const currentRoute = routes.home;
 
 export type Transaction = {
   id: number;
   amount: number;
-  type?: string;
   category: Category;
-  date?: string;
+  date: string;
 };
 
 type Reduced = {
@@ -29,9 +30,15 @@ export const categoryChanged = createEvent<Category>();
 export const dateChanged = createEvent<string>();
 export const categorySelected = createEvent<Category["id"]>();
 
+export const dateEndChanged = createEvent<string>();
+export const dateStartChanged = createEvent<string>();
+export const filterApplied = createEvent();
+
 export const $transactions = createStore<Transaction[]>([]);
 export const $transactionsFiltered = createStore<Transaction[]>([]);
 export const $amount = createStore(0);
+export const $dateStart = createStore(convertDateToString(addDays(-7)));
+export const $dateEnd = createStore(convertDateToString(new Date()));
 export const $category = createStore<Category | null>(null);
 export const $date = createStore(convertDateToString(new Date()));
 
@@ -44,7 +51,6 @@ export const $balance = $transactions.map((transactions) => {
 const $transaction = combine({
   amount: $amount,
   category: $category,
-  type: "",
   date: $date,
 });
 
@@ -96,6 +102,9 @@ $transactions.on(transactionAdded, (transactions, transaction) => {
   return [...transactions, { ...transaction, id: transactions.length }];
 });
 
+$dateStart.on(dateStartChanged, (_, date) => date);
+$dateEnd.on(dateEndChanged, (_, date) => date);
+
 sample({
   //@ts-ignore
   clock: transactionSubmitted,
@@ -125,6 +134,28 @@ sample({
     }
     return transactions;
   },
+  target: $transactionsFiltered,
+});
+
+sample({
+  clock: filterApplied,
+  source: {
+    transactions: $transactions,
+    categories: $categoriesSelected,
+    start: $dateStart,
+    end: $dateEnd,
+  },
+
+  fn: ({ transactions, categories, start, end }) => {
+    const filteredTransactions = transactions.filter((transaction) => {
+      const isInCategory = categories.length === 0 || categories.includes(transaction.category.id);
+      const isWithinDateRange = transaction.date >= start && transaction.date <= end;
+      return isInCategory && isWithinDateRange;
+    });
+
+    return filteredTransactions;
+  },
+
   target: $transactionsFiltered,
 });
 

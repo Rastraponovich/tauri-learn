@@ -24,11 +24,16 @@ import {
   $categoriesStats,
   $charts,
   $date,
+  $dateEnd,
+  $dateStart,
   $transactionsFiltered,
   amountChanged,
   categoryChanged,
   categorySelected,
   dateChanged,
+  dateEndChanged,
+  dateStartChanged,
+  filterApplied,
   transactionSubmitted,
 } from "./model";
 
@@ -44,13 +49,25 @@ export const HomePage = () => {
           <ThemeToggler />
         </div>
       </header>
-      <section className="mt-10 flex grow flex-col  gap-10 px-2 text-center">
+      <section className="mt-10 flex grow flex-col  gap-10 px-2 text-center dark:text-gray-900">
         <section className="grid grid-cols-2">
           <div>
             <Balance />
           </div>
           <div>
             <Chart />
+          </div>
+        </section>
+        <section className="flex flex-col gap-4 rounded-md bg-gray-50 p-2 shadow-md dark:bg-white">
+          <header>
+            <h3 className="text-left text-2xl font-semibold">{t("Transactions")}</h3>
+          </header>
+
+          <div className="flex flex-col gap-2 ">
+            <TransactionFilter />
+            <Categories />
+
+            <TransactionList />
           </div>
         </section>
       </section>
@@ -62,14 +79,12 @@ const Balance = () => {
   const [balance] = useUnit([$balance]);
 
   return (
-    <div className="flex flex-col gap-2 rounded-md p-2 shadow-md dark:bg-white dark:text-gray-900">
+    <div className="flex flex-col gap-2 rounded-md p-2 shadow-md dark:bg-white ">
       <h2 className="text-3xl font-bold">
         <Money value={balance} />
       </h2>
-      <Categories />
       <div className="flex flex-col gap-2">
         <TransactionForm />
-        <TransactionList />
 
         <CategoriesStats />
       </div>
@@ -109,10 +124,18 @@ const TransactionForm = () => {
 };
 
 const TransactionList = () => {
+  const [start, end] = useUnit([$dateStart, $dateEnd]);
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 ">
       {useList($transactionsFiltered, {
         fn: ({ id }) => <TransactionEntry id={id} />,
+        getKey: ({ id }) => id,
+        keys: [start, end],
+        placeholder: (
+          <div className="flex min-h-[100px] grow flex-col items-center justify-center rounded-md p-2 dark:bg-white">
+            <span className="text-2xl font-semibold">{t("No transactions yet")}</span>
+          </div>
+        ),
       })}
     </div>
   );
@@ -128,7 +151,7 @@ const TransactionEntry = ({ id }: TransactionEntryProps) => {
     fn: (transactions) => transactions.find((transaction) => transaction.id === id)!,
   });
   return (
-    <div className="flex gap-2 rounded-md border p-2 text-sm font-normal">
+    <div className="flex items-center gap-2 rounded-md bg-gray-200 p-2 text-sm font-normal ">
       <span>{date}</span>
       <span className="font-bold after:content-['\20BD']">{amount}</span>
       <span className="grow"></span>
@@ -211,6 +234,35 @@ const CategoriesStats = () => {
   return (
     <div className="flex gap-1">
       <span>{t("категория", { count: stats.count, sum: stats.total })}</span>
+    </div>
+  );
+};
+
+const TransactionFilter = () => {
+  const [dateStart, dateEnd] = useUnit([$dateStart, $dateEnd]);
+
+  const [handleDateStartChange, handleDateEndChange, handleFilterApply] = useUnit([
+    dateStartChanged,
+    dateEndChanged,
+    filterApplied,
+  ]);
+  return (
+    <div className="flex gap-4 ">
+      <Input
+        type="date"
+        label={t("Start Date")}
+        value={dateStart}
+        onValueChange={handleDateStartChange}
+      />
+      <Input
+        type="date"
+        label={t("End Date")}
+        value={dateEnd}
+        onValueChange={handleDateEndChange}
+      />
+      <Button type="button" onClick={handleFilterApply} className="self-end">
+        {t("Apply")}
+      </Button>
     </div>
   );
 };

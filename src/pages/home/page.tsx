@@ -10,9 +10,10 @@ import { ThemeToggler } from "~/widgets/theme-swither";
 import { CategoriesSelect } from "~/entities/categories";
 
 import { Badge } from "~/shared/ui/bage";
+import { Button } from "~/shared/ui/button";
 import { DonutChart } from "~/shared/ui/charts";
 import { Money } from "~/shared/ui/display";
-import { Number } from "~/shared/ui/input";
+import { Input } from "~/shared/ui/input";
 import { SelectTemplateProps } from "~/shared/ui/select";
 
 import {
@@ -61,7 +62,7 @@ const Balance = () => {
   const [balance] = useUnit([$balance]);
 
   return (
-    <article className="flex flex-col gap-2 rounded-md p-2 shadow-md">
+    <div className="flex flex-col gap-2 rounded-md p-2 shadow-md dark:bg-white dark:text-gray-900">
       <h2 className="text-3xl font-bold">
         <Money value={balance} />
       </h2>
@@ -72,7 +73,7 @@ const Balance = () => {
 
         <CategoriesStats />
       </div>
-    </article>
+    </div>
   );
 };
 
@@ -93,16 +94,16 @@ const TransactionForm = () => {
   };
 
   return (
-    <form id="transaction-form" className="flex flex-col gap-2 rounded-md" onSubmit={handleSubmit}>
-      <input type="date" value={date} onChange={(e) => handleDateChanged(e.target.value)} />
-      <Number value={amount} onValueChange={handleChangeAmount} label={t("Amount")} />
+    <form id="transaction-form" className="flex flex-col gap-2 rounded-md " onSubmit={handleSubmit}>
+      <Input type="date" value={date} onValueChange={handleDateChanged} label={t("Date")} />
+      <Input value={amount} onValueChange={handleChangeAmount} label={t("Amount")} type="number" />
 
       <CategoriesSelect
         onChange={handleChangeCategory}
         template={SelectTemplate}
         templateProps={{ displayProperty: "name", keyProperty: "id" }}
       />
-      <button type="submit">{t("submit")}</button>
+      <Button type="submit">{t("submit")}</Button>
     </form>
   );
 };
@@ -146,15 +147,16 @@ const Categories = () => {
   ]);
 
   return (
-    <div className="flex gap-1">
+    <div className="flex flex-wrap gap-3">
       {Object.entries(categories).map(([name, category]) => (
         <Badge
           key={name}
+          size="sm"
           onClick={() => onClick(category.id)}
           selected={selected.includes(category.id)}
           style={{ backgroundColor: category.color }}
         >
-          {name}:{category.amount}
+          {name} : {category.amount}
         </Badge>
       ))}
     </div>

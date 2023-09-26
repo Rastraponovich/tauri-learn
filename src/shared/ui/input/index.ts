@@ -1,1 +1,1 @@
-export { TextArea, Input, Number } from "./view";
+export { TextArea, Input } from "./view";

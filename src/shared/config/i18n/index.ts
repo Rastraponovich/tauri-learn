@@ -16,6 +16,7 @@ const resources = {
       категория_zero: "no categories",
       категория_one: "{{count}} category by sum {{sum}}",
       категория_other: "{{count}} categories by sum {{sum}}",
+      Дата: "Date",
     },
   },
   ru: {
@@ -26,7 +27,7 @@ const resources = {
       Categories: "Категории",
       submit: "Отправить",
       "click to start": "Нажмите, чтобы начать",
-
+      Date: "Дата",
       категория_zero: "нет категорий",
       категория_one: "{{count}} категория на сумму {{sum}}",
       категория_few: "{{count}} категории на сумму {{sum}}",

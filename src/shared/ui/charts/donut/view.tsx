@@ -21,6 +21,7 @@ interface DonutChartProps {
 export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartProps, ref) => {
   return (
     <Doughnut
+      className="dark:text-white"
       data={props.data}
       options={{
         maintainAspectRatio: true,
@@ -31,7 +32,6 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
             display: true,
 
             labels: {
-              color: "#000",
               usePointStyle: true,
               font: { size: 14, weight: "light" },
             },
@@ -41,7 +41,6 @@ export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartPro
               font: {
                 size: 16,
               },
-              color: "#000",
             },
           },
         },

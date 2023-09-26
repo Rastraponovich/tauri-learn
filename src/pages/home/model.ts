@@ -24,7 +24,7 @@ type Reduced = {
 
 export const transactionAdded = createEvent<Omit<Transaction, "id">>();
 export const transactionSubmitted = createEvent();
-export const amountChanged = createEvent<number>();
+export const amountChanged = createEvent<string>();
 export const categoryChanged = createEvent<Category>();
 export const dateChanged = createEvent<string>();
 export const categorySelected = createEvent<Category["id"]>();
@@ -87,7 +87,7 @@ export const $charts = $transactions.map((transactions) => {
   );
 });
 
-$amount.on(amountChanged, (_, amount) => amount);
+$amount.on(amountChanged, (_, amount) => Number(amount));
 $date.on(dateChanged, (_, date) => date);
 
 $category.on(categoryChanged, (_, category) => category);

@@ -14,7 +14,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={pending || disabled}
         aria-disabled={pending || disabled}
         className={clsx(
-          "flex items-center gap-2 rounded-md border border-current px-4 py-2",
+          "flex items-center justify-center gap-2 rounded-md border border-current px-4 py-2",
           className,
         )}
         {...restProps}

@@ -69,8 +69,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       }
     };
     return (
-      <label htmlFor="" className="flex w-full flex-col gap-2">
-        {label && <span className="text-left text-sm font-normal">{label}</span>}
+      <label className="flex w-full flex-col gap-2 text-sm">
+        {label && <span className="text-left font-normal">{label}</span>}
         <input
           ref={ref}
           type={type}
@@ -78,45 +78,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-disabled={pending || disabled}
           onChange={handleChange}
           className={clsx(
-            "w-full rounded-md border px-4 py-2",
-            "disabled:border-transparent",
-            className,
-          )}
-          {...restProps}
-        />
-      </label>
-    );
-  },
-);
-
-interface NumberProps extends InputHTMLAttributes<HTMLInputElement> {
-  onValueChange?: (value: number) => void;
-  pending?: boolean;
-  label?: ReactNode;
-}
-
-export const Number = forwardRef<HTMLInputElement, NumberProps>(
-  ({ disabled, pending, className, onChange, onValueChange, label, ...restProps }, ref) => {
-    const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
-      if (onValueChange) {
-        return onValueChange(+event.target.value);
-      }
-
-      if (onChange) {
-        return onChange(event);
-      }
-    };
-    return (
-      <label htmlFor="" className="flex w-full flex-col gap-2">
-        {label && <span className="text-left text-sm font-normal">{label}</span>}
-        <input
-          ref={ref}
-          type={"number"}
-          disabled={pending || disabled}
-          aria-disabled={pending || disabled}
-          onChange={handleChange}
-          className={clsx(
-            "w-full rounded-md border px-4 py-2",
+            "w-full rounded-lg border px-3 py-2 dark:text-gray-900",
             "disabled:border-transparent",
             className,
           )}

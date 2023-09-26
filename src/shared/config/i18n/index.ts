@@ -7,13 +7,12 @@ import { initReactI18next } from "react-i18next";
 const resources = {
   en: {
     translation: {
-      "Welcome to React": "Welcome to React and react-i18next",
       Welcome: "Welcome to React and react-i18next",
+      "Выберите категорию": "Select category",
     },
   },
   ru: {
     translation: {
-      "Welcome to React": "Добро пожаловать в React и react-i18next",
       Welcome: "Добро пожаловать в React и react-i18next",
       Amount: "Сумма",
       "Select category": "Выберите категорию",
@@ -33,7 +32,7 @@ i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: "en", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
+    lng: "ru", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
     // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage
     // if you're using a language detector, do not define the lng option
 

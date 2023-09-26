@@ -10,6 +10,7 @@ import { CategoriesSelect } from "~/entities/categories";
 import { routes } from "~/shared/routing";
 import { Badge } from "~/shared/ui/bage";
 import { DonutChart } from "~/shared/ui/charts";
+import { Money } from "~/shared/ui/display";
 import { Number } from "~/shared/ui/input";
 import { SelectTemplateProps } from "~/shared/ui/select";
 
@@ -18,6 +19,7 @@ import {
   $balance,
   $categoriesList,
   $categoriesSelected,
+  $categoriesStats,
   $charts,
   $date,
   $transactionsFiltered,
@@ -70,11 +72,15 @@ const Balance = () => {
 
   return (
     <article className="flex flex-col gap-2 rounded-md p-2 shadow-md">
-      <h2 className="text-3xl font-bold after:content-['\20BD']"> {balance}</h2>
+      <h2 className="text-3xl font-bold">
+        <Money value={balance} />
+      </h2>
       <Categories />
       <div className="flex flex-col gap-2">
         <TransactionForm />
         <TransactionList />
+
+        <CategoriesStats />
       </div>
     </article>
   );
@@ -206,3 +212,13 @@ const SelectTemplate = memo<SelectTemplateProps<any>>(
     );
   },
 );
+
+const CategoriesStats = () => {
+  const stats = useUnit($categoriesStats);
+
+  return (
+    <div className="flex gap-1">
+      <span>{t("категория", { count: stats.count, sum: stats.total })}</span>
+    </div>
+  );
+};

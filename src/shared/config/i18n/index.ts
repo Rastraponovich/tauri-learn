@@ -10,7 +10,7 @@ import { appStarted } from "~/shared/init";
 const resources = {
   en: {
     translation: {
-      Welcome: "Welcome to React and react-i18next",
+      Welcome: "Welcome to Money Keeper",
       "Выберите категорию": "Select category",
       "нет категорий": "no categories",
       категория_zero: "no categories",
@@ -20,7 +20,7 @@ const resources = {
   },
   ru: {
     translation: {
-      Welcome: "Добро пожаловать в React и react-i18next",
+      Welcome: "Добро пожаловать в Money Keeper",
       Amount: "Сумма",
       "Select category": "Выберите категорию",
       Categories: "Категории",

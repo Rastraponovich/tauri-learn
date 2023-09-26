@@ -1,4 +1,3 @@
-import { Link } from "atomic-router-react";
 import clsx from "clsx";
 import { useList, useStoreMap, useUnit } from "effector-react";
 import { t } from "i18next";
@@ -10,7 +9,6 @@ import { ThemeToggler } from "~/widgets/theme-swither";
 
 import { CategoriesSelect } from "~/entities/categories";
 
-import { routes } from "~/shared/routing";
 import { Badge } from "~/shared/ui/bage";
 import { DonutChart } from "~/shared/ui/charts";
 import { Money } from "~/shared/ui/display";
@@ -37,20 +35,15 @@ export const HomePage = () => {
   const { t } = useTranslation();
   return (
     <>
-      <header className="flex justify-end p-1">
-        <div className="flex gap-2 ">
+      <header className="flex items-center justify-between px-4 py-1">
+        <h1 className="text-bold text-2xl">{t("Welcome")}</h1>
+
+        <div className="flex gap-2 p-2">
           <LangToggler />
           <ThemeToggler />
         </div>
       </header>
-      <section className="flex grow flex-col gap-10  text-center">
-        <header>
-          <h1 className="text-bold text-3xl">{t("Welcome")}</h1>
-          <Link to={routes.posts.posts}>
-            <span className="text-blue-300 hover:underline">{t("click to start")}</span>
-          </Link>
-        </header>
-
+      <section className="mt-10 flex grow flex-col  gap-10 px-2 text-center">
         <section className="grid grid-cols-2">
           <div>
             <Balance />

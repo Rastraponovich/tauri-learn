@@ -3,6 +3,7 @@ import { reset } from "patronum";
 
 import { Category } from "~/entities/categories/model";
 
+import { convertDateToString } from "~/shared/lib/dates";
 import { routes } from "~/shared/routing";
 
 export const currentRoute = routes.home;
@@ -32,7 +33,7 @@ export const $transactions = createStore<Transaction[]>([]);
 export const $transactionsFiltered = createStore<Transaction[]>([]);
 export const $amount = createStore(0);
 export const $category = createStore<Category | null>(null);
-export const $date = createStore(new Date().toLocaleDateString("ru"));
+export const $date = createStore(convertDateToString(new Date()));
 
 export const $categoriesSelected = createStore<Category["id"][]>([]);
 

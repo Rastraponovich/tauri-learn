@@ -58,6 +58,18 @@ export const $categoriesList = $transactions.map((transactions) => {
   }, {});
 });
 
+export const $categoriesStats = $categoriesList.map((categories) => {
+  const total = Object.entries(categories).reduce((total, [_, category]) => {
+    total += category.amount;
+    return total;
+  }, 0);
+
+  return {
+    total,
+    count: Object.keys(categories).length,
+  };
+});
+
 export const $charts = $transactions.map((transactions) => {
   return transactions.reduce<Reduced>(
     (acc, { category, amount }) => {

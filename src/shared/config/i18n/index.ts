@@ -9,6 +9,10 @@ const resources = {
     translation: {
       Welcome: "Welcome to React and react-i18next",
       "Выберите категорию": "Select category",
+      "нет категорий": "no categories",
+      категория_zero: "no categories",
+      категория_one: "{{count}} category by sum {{sum}}",
+      категория_other: "{{count}} categories by sum {{sum}}",
     },
   },
   ru: {
@@ -19,6 +23,12 @@ const resources = {
       Categories: "Категории",
       submit: "Отправить",
       "click to start": "Нажмите, чтобы начать",
+
+      категория_zero: "нет категорий",
+      категория_one: "{{count}} категория на сумму {{sum}}",
+      категория_few: "{{count}} категории на сумму {{sum}}",
+      категория_many: "{{count}} категорий на сумму {{sum}}",
+      категория_other: "{{count}} категорий на сумму {{sum}}",
     },
   },
   fr: {
@@ -31,6 +41,8 @@ const resources = {
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
+    fallbackLng: "en",
+
     resources,
     lng: "ru", // language to use, more information here: https://www.i18next.com/overview/configuration-options#languages-namespaces-resources
     // you can use the i18n.changeLanguage function to change the language manually: https://www.i18next.com/overview/api#changelanguage

@@ -1,5 +1,6 @@
 import { Combobox, Transition } from "@headlessui/react";
 import clsx from "clsx";
+import { t } from "i18next";
 import {
   type ChangeEvent,
   type ElementType,
@@ -48,7 +49,7 @@ export function Select<T extends SelectItem>({
   }, []);
 
   const handleDisplayValue = useCallback((item: T) => {
-    return item[displayProperty] as string;
+    return t(item[displayProperty] as string);
   }, []);
 
   return (
@@ -56,7 +57,7 @@ export function Select<T extends SelectItem>({
       <div className="relative mt-1">
         <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
           <Combobox.Input
-            className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0"
+            className="w-full rounded-lg border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:outline-none focus:ring-0"
             displayValue={handleDisplayValue}
             onChange={handleSearch}
           />

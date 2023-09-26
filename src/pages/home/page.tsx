@@ -1,6 +1,9 @@
 import { Link } from "atomic-router-react";
+import clsx from "clsx";
 import { useList, useStoreMap, useUnit } from "effector-react";
-import { FormEvent } from "react";
+import { t } from "i18next";
+import { FormEvent, memo } from "react";
+import { useTranslation } from "react-i18next";
 
 import { CategoriesSelect } from "~/entities/categories";
 
@@ -8,6 +11,7 @@ import { routes } from "~/shared/routing";
 import { Badge } from "~/shared/ui/bage";
 import { DonutChart } from "~/shared/ui/charts";
 import { Number } from "~/shared/ui/input";
+import { SelectTemplateProps } from "~/shared/ui/select";
 
 import {
   $amount,
@@ -25,24 +29,39 @@ import {
 } from "./model";
 
 export const HomePage = () => {
-  return (
-    <section className="flex grow flex-col gap-10  text-center">
-      <header>
-        <h1 className="text-bold text-3xl">Welcome</h1>
-        <Link to={routes.posts.posts}>
-          <a className="text-blue-300 hover:underline">click to start</a>
-        </Link>
-      </header>
+  const { i18n } = useTranslation();
 
-      <section className="grid grid-cols-2">
-        <div>
-          <Balance />
-        </div>
-        <div>
-          <Chart />
-        </div>
+  const toggleLanguage = () => {
+    i18n.changeLanguage(i18n.language === "en" ? "ru" : "en");
+  };
+  return (
+    <>
+      <header className="flex justify-end p-1">
+        <button
+          onClick={toggleLanguage}
+          className="flex h-10 w-10 items-center justify-center rounded-md border "
+        >
+          {i18n.language}
+        </button>
+      </header>
+      <section className="flex grow flex-col gap-10  text-center">
+        <header>
+          <h1 className="text-bold text-3xl">{t("Welcome")}</h1>
+          <Link to={routes.posts.posts}>
+            <span className="text-blue-300 hover:underline">{t("click to start")}</span>
+          </Link>
+        </header>
+
+        <section className="grid grid-cols-2">
+          <div>
+            <Balance />
+          </div>
+          <div>
+            <Chart />
+          </div>
+        </section>
       </section>
-    </section>
+    </>
   );
 };
 
@@ -63,6 +82,8 @@ const Balance = () => {
 
 const TransactionForm = () => {
   const [date, amount] = useUnit([$date, $amount]);
+  const { t } = useTranslation();
+
   const [onSubmit, handleChangeAmount, handleChangeCategory, handleDateChanged] = useUnit([
     transactionSubmitted,
     amountChanged,
@@ -78,10 +99,14 @@ const TransactionForm = () => {
   return (
     <form id="transaction-form" className="flex flex-col gap-2 rounded-md" onSubmit={handleSubmit}>
       <input type="date" value={date} onChange={(e) => handleDateChanged(e.target.value)} />
-      <Number value={amount} onValueChange={handleChangeAmount} label="Amount" />
+      <Number value={amount} onValueChange={handleChangeAmount} label={t("Amount")} />
 
-      <CategoriesSelect onChange={handleChangeCategory} />
-      <button type="submit">submit</button>
+      <CategoriesSelect
+        onChange={handleChangeCategory}
+        template={SelectTemplate}
+        templateProps={{ displayProperty: "name", keyProperty: "id" }}
+      />
+      <button type="submit">{t("submit")}</button>
     </form>
   );
 };
@@ -155,5 +180,29 @@ const Chart = () => {
     ],
   };
 
-  return <DonutChart data={data} />;
+  return <DonutChart data={data} title="Categories" />;
 };
+
+const SelectTemplate = memo<SelectTemplateProps<any>>(
+  ({ item, active, selected, displayProperty }) => {
+    return (
+      <div className="text-left">
+        <span className={clsx("block truncate", selected ? "font-medium" : "font-normal")}>
+          {item[displayProperty] as string}
+        </span>
+        {selected ? (
+          <span
+            className={clsx(
+              "absolute inset-y-0 left-0 flex items-center pl-3",
+              active ? "text-white" : "text-teal-600",
+            )}
+          >
+            <span className="h-5 w-5" aria-hidden="true">
+              X
+            </span>
+          </span>
+        ) : null}
+      </div>
+    );
+  },
+);

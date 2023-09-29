@@ -1,50 +1,28 @@
-import { Link } from "atomic-router-react";
+// import { Link } from "atomic-router-react";
 import { type ReactNode } from "react";
 
-import { routes } from "~/shared/routing";
+import { LangToggler } from "~/widgets/lang-switcher";
+import { ThemeToggler } from "~/widgets/theme-swither";
+
+// import { routes } from "~/shared/routing";
 
 interface MainLayoutProps {
   children: ReactNode;
   actions?: ReactNode;
 }
 
-export const MainLayout = ({ children, actions }: MainLayoutProps) => {
+export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
-      <header className="flex justify-between gap-4 bg-zinc-400 px-4 py-2 text-white">
-        <nav>
-          <ul className="flex gap-4">
-            <li>
-              <Link
-                to={routes.home}
-                activeClassName="text-blue-700"
-                className="flex items-center rounded-md border px-4 py-2 hover:border-blue-300 hover:text-blue-300 "
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={routes.posts.posts}
-                activeClassName="text-blue-700"
-                className="flex items-center rounded-md border px-4 py-2 hover:border-blue-300 hover:text-blue-300 "
-              >
-                Posts
-              </Link>
-            </li>
-            <li>
-              <Link
-                to={routes.users.users}
-                activeClassName="text-blue-700"
-                className="flex items-center rounded-md border px-4 py-2 hover:border-blue-300 hover:text-blue-300 "
-              >
-                Users
-              </Link>
-            </li>
-          </ul>
-        </nav>
+      <header className="flex items-center justify-between px-4 py-1">
+        <h1 className="bg-gradient-to-br from-teal-400 from-[30%] to-teal-500 to-[50%]  bg-clip-text text-2xl font-bold text-transparent">
+          MoneyKeeper
+        </h1>
 
-        {actions}
+        <div className="flex gap-2 p-2">
+          <LangToggler />
+          <ThemeToggler />
+        </div>
       </header>
       {children}
     </>

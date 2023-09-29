@@ -4,8 +4,7 @@ import { t } from "i18next";
 import { FormEvent, memo } from "react";
 import { useTranslation } from "react-i18next";
 
-import { LangToggler } from "~/widgets/lang-switcher";
-import { ThemeToggler } from "~/widgets/theme-swither";
+import { MainLayout } from "~/layouts/main-layout";
 
 import { CategoriesSelect } from "~/entities/categories";
 
@@ -13,6 +12,7 @@ import { Badge } from "~/shared/ui/bage";
 import { Button } from "~/shared/ui/button";
 import { DonutChart } from "~/shared/ui/charts";
 import { Money } from "~/shared/ui/display";
+import { Icon } from "~/shared/ui/icon";
 import { Input } from "~/shared/ui/input";
 import { SelectTemplateProps } from "~/shared/ui/select";
 
@@ -40,17 +40,7 @@ import {
 export const HomePage = () => {
   const { t } = useTranslation();
   return (
-    <>
-      <header className="flex items-center justify-between px-4 py-1">
-        <h1 className="bg-gradient-to-br from-teal-400 from-[30%] to-teal-500 to-[50%]  bg-clip-text text-2xl font-bold text-transparent">
-          MoneyKeeper
-        </h1>
-
-        <div className="flex gap-2 p-2">
-          <LangToggler />
-          <ThemeToggler />
-        </div>
-      </header>
+    <MainLayout>
       <section className="mt-10 flex grow flex-col  gap-10 px-2 text-center dark:text-gray-900">
         <section className="grid grid-cols-2">
           <div>
@@ -73,7 +63,7 @@ export const HomePage = () => {
           </div>
         </section>
       </section>
-    </>
+    </MainLayout>
   );
 };
 
@@ -213,18 +203,16 @@ const SelectTemplate = memo<SelectTemplateProps<any>>(
         <span className={clsx("block truncate", selected ? "font-medium" : "font-normal")}>
           {item[displayProperty] as string}
         </span>
-        {selected ? (
+        {selected && (
           <span
             className={clsx(
               "absolute inset-y-0 left-0 flex items-center pl-3",
               active ? "text-white" : "text-teal-600",
             )}
           >
-            <span className="h-5 w-5" aria-hidden="true">
-              X
-            </span>
+            <Icon name="general/check" className="h-5 w-5" aria-hidden="true" />
           </span>
-        ) : null}
+        )}
       </div>
     );
   },

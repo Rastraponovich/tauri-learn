@@ -1,9 +1,19 @@
+import svg from "@neodx/svg/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
   plugins: [
+    svg({
+      root: "src/shared/assets/icons",
+      group: true,
+      output: "public",
+      metadata: "src/shared/ui/icon/sprite.gen.ts",
+      resetColors: {
+        replaceUnknown: "currentColor",
+      },
+    }),
     react({
       babel: {
         babelrc: true,

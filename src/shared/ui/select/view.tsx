@@ -11,6 +11,8 @@ import {
   useState,
 } from "react";
 
+import { Icon } from "../icon";
+
 type SelectItem = Record<string, string | number | boolean>;
 interface SelectProps<T> {
   items: T[];
@@ -61,10 +63,8 @@ export function Select<T extends SelectItem>({
             displayValue={handleDisplayValue}
             onChange={handleSearch}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <span className="h-5 w-5 text-gray-400" aria-hidden="true">
-              V
-            </span>
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400 hover:text-gray-900">
+            <Icon name="arrows/chevron-selector-vertical" className="h-5 w-5 " aria-hidden="true" />
           </Combobox.Button>
         </div>
         <Transition
@@ -131,9 +131,7 @@ const SelectTemplate = memo<SelectTemplateProps<any>>(
               active ? "text-white" : "text-teal-600",
             )}
           >
-            <span className="h-5 w-5" aria-hidden="true">
-              X
-            </span>
+            <Icon name="general/check" className="h-5 w-5" aria-hidden="true" />
           </span>
         )}
       </div>

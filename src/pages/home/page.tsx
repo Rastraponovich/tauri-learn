@@ -42,7 +42,9 @@ export const HomePage = () => {
   return (
     <>
       <header className="flex items-center justify-between px-4 py-1">
-        <h1 className="text-bold text-2xl">{t("Welcome")}</h1>
+        <h1 className="bg-gradient-to-br from-teal-400 from-[30%] to-teal-500 to-[50%]  bg-clip-text text-2xl font-bold text-transparent">
+          MoneyKeeper
+        </h1>
 
         <div className="flex gap-2 p-2">
           <LangToggler />

@@ -2,6 +2,7 @@ import { combine, createEvent, createStore, sample } from "effector";
 import { reset } from "patronum";
 
 import { Category } from "~/entities/categories/model";
+import { $transactions } from "~/entities/transactions";
 
 import { convertDateToString } from "~/shared/lib/dates";
 import { routes } from "~/shared/routing";
@@ -34,7 +35,6 @@ export const dateEndChanged = createEvent<string>();
 export const dateStartChanged = createEvent<string>();
 export const filterApplied = createEvent();
 
-export const $transactions = createStore<Transaction[]>([]);
 export const $transactionsFiltered = createStore<Transaction[]>([]);
 export const $amount = createStore(0);
 export const $dateStart = createStore(convertDateToString(addDays(-7)));

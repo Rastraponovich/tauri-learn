@@ -34,6 +34,7 @@ const resources = {
       Categories: "Категории",
       submit: "Отправить",
       Apply: "Применить",
+      "Nothing found": "Ничего не найдено",
       "No transactions yet": "Нет транзакций",
       "click to start": "Нажмите, чтобы начать",
       Date: "Дата",

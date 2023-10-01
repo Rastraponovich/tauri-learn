@@ -11,6 +11,7 @@ import { CategoriesSelect } from "~/entities/categories";
 import { Badge } from "~/shared/ui/bage";
 import { Button } from "~/shared/ui/button";
 import { DonutChart } from "~/shared/ui/charts";
+import { DynamicDonutChart } from "~/shared/ui/charts/donut";
 import { Money } from "~/shared/ui/display";
 import { Icon } from "~/shared/ui/icon";
 import { Input } from "~/shared/ui/input";
@@ -47,7 +48,8 @@ export const HomePage = () => {
             <Balance />
           </div>
           <div>
-            <Chart />
+            {/* <Chart /> */}
+            <DynamicDonutChart />
           </div>
         </section>
         <section className="flex flex-col gap-4 rounded-md bg-gray-50 p-2 shadow-md dark:bg-white">

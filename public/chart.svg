@@ -1,0 +1,68 @@
+<?xml version="1.0" standalone="no"?>
+    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+    <svg 
+        xmlns:xlink="http://www.w3.org/1999/xlink" 
+        version="1.1" 
+        class="highcharts-root" 
+        style="font-family: Roboto; font-size: 12px;" 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="650" 
+        height="400" 
+        viewBox="0 0 650 400" 
+        aria-label="Interactive chart" 
+        aria-hidden="false">
+        <desc aria-hidden="true">Created with Highcharts 10.3.1</desc>
+        <defs aria-hidden="true">
+            <clipPath id="highcharts-mc4p5vz-14-">
+                <rect x="0" y="0" width="630" height="301" fill="none"></rect>
+            </clipPath>
+        </defs>
+
+        <rect fill="#ffffff" class="highcharts-background" x="0" y="0" width="650" height="400" rx="0" ry="0" aria-hidden="true"></rect>
+        <rect fill="none" class="highcharts-plot-background" x="10" y="46" width="630" height="301" aria-hidden="true"></rect>
+        <g class="highcharts-pane-group" data-z-index="0" aria-hidden="true"></g>
+        <rect fill="none" class="highcharts-plot-border" data-z-index="1" x="10" y="46" width="630" height="301" aria-hidden="true"></rect>
+        <g class="highcharts-series-group" data-z-index="3" aria-hidden="false">
+            <g class="highcharts-series highcharts-series-0 highcharts-pie-series" data-z-index="0.1" opacity="1" transform="translate(10,46) scale(1 1)" clip-path="none" aria-hidden="false">
+                <path fill="#94d13d" d="M 314.97669978549726 36.100002372814686 A 114.4 114.4 0 0 1 369.5243665114174 251.07063913751682 L 350.4408382324213 215.87091543938593 A 74.36 74.36 0 0 0 314.98485486057325 76.14000154232956 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-0" tabindex="-1" role="img" aria-label="Item 1, 80." style="outline: none;"></path>
+                <path fill="#6f58e9" d="M 369.42376862686064 251.12511320962545 A 114.4 114.4 0 0 1 200.99946556071953 160.05186618197865 L 240.8996526144677 156.70871301828612 A 74.36 74.36 0 0 0 350.3754496074594 215.90632358625655 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-1" tabindex="-1" role="img" aria-label="Item 2, 60." style="outline: none;"></path>
+                <path fill="#2d99fe" d="M 200.989970696392 159.93786089060677 A 114.4 114.4 0 0 1 244.6437281254743 60.29271089364329 L 269.2684232815583 91.86526208086813 A 74.36 74.36 0 0 0 240.89348095265478 156.63460957889438 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-2" tabindex="-1" role="img" aria-label="Item 3, 30." style="outline: none;"></path>
+                <path fill="#2ddac1" d="M 244.73397057767912 60.222399737135575 A 114.4 114.4 0 0 1 314.8411006950846 36.10011035402657 L 314.896715451805 76.14007173011727 A 74.36 74.36 0 0 0 269.32708087549145 91.81955982913813 Z" transform="translate(0,0)" stroke="#ffffff" stroke-width="1" opacity="1" stroke-linejoin="round" class="highcharts-point highcharts-color-3" tabindex="-1" role="img" aria-label="Item 4, 20." style="outline: none;"></path>
+            </g>
+            
+            <g class="highcharts-markers highcharts-series-0 highcharts-pie-series" data-z-index="0.1" opacity="1" transform="translate(10,46) scale(1 1)" clip-path="none" aria-hidden="true"></g>
+        </g>
+        
+        <text x="325" text-anchor="middle" class="highcharts-title" data-z-index="4" style="color: rgb(51, 51, 51); font-size: 18px; fill: rgb(51, 51, 51);" y="24" aria-hidden="true">Chart title</text>
+        <text x="325" text-anchor="middle" class="highcharts-subtitle" data-z-index="4" style="color: rgb(102, 102, 102); fill: rgb(102, 102, 102);" y="45" aria-hidden="true"></text>
+        <text x="10" text-anchor="start" class="highcharts-caption" data-z-index="4" style="color: rgb(102, 102, 102); fill: rgb(102, 102, 102);" y="397" aria-hidden="true"></text>
+        
+        <g class="highcharts-legend highcharts-no-tooltip" data-z-index="7" transform="translate(177,359)" aria-hidden="true">
+            <rect fill="none" class="highcharts-legend-box" rx="0" ry="0" x="0" y="0" width="295" height="26"></rect>
+            <g data-z-index="1">
+                <g>
+                    <g class="highcharts-legend-item highcharts-pie-series highcharts-color-0" data-z-index="1" transform="translate(8,3)">
+                        <text x="21" text-anchor="start" data-z-index="2" y="15" style="color: rgb(51, 51, 51); cursor: pointer; font-size: 12px; font-weight: bold; fill: rgb(51, 51, 51);">Item 1</text>
+                        <rect x="2" y="4" width="12" height="12" fill="#94d13d" rx="6" ry="6" class="highcharts-point" data-z-index="3"></rect>
+                    </g>
+                    
+                    <g class="highcharts-legend-item highcharts-pie-series highcharts-color-1" data-z-index="1" transform="translate(82.7734375,3)">
+                        <text x="21" y="15" text-anchor="start" data-z-index="2" style="color: rgb(51, 51, 51); cursor: pointer; font-size: 12px; font-weight: bold; fill: rgb(51, 51, 51);">Item 2</text>
+                        <rect x="2" y="4" width="12" height="12" fill="#6f58e9" rx="6" ry="6" class="highcharts-point" data-z-index="3"></rect>
+                    </g>
+                    
+                    <g class="highcharts-legend-item highcharts-pie-series highcharts-color-2" data-z-index="1" transform="translate(157.546875,3)">
+                        <text x="21" y="15" text-anchor="start" data-z-index="2" style="color: rgb(51, 51, 51); cursor: pointer; font-size: 12px; font-weight: bold; fill: rgb(51, 51, 51);">Item 3</text>
+                        <rect x="2" y="4" width="12" height="12" fill="#2d99fe" rx="6" ry="6" class="highcharts-point" data-z-index="3"></rect>
+                    </g>
+                    
+                    <g class="highcharts-legend-item highcharts-pie-series highcharts-color-3" data-z-index="1" transform="translate(232.3203125,3)">
+                        <text x="21" y="15" text-anchor="start" data-z-index="2" style="color: rgb(51, 51, 51); cursor: pointer; font-size: 12px; font-weight: bold; fill: rgb(51, 51, 51);">Item 4</text>
+                        <rect x="2" y="4" width="12" height="12" fill="#2ddac1" rx="6" ry="6" class="highcharts-point" data-z-index="3"></rect>
+                    </g>
+                </g>
+            </g>
+        </g>
+        
+        <text x="640" class="highcharts-credits" text-anchor="end" data-z-index="8" y="395" style="cursor: pointer; color: rgb(153, 153, 153); font-size: 9px; fill: rgb(153, 153, 153);" aria-label="Chart credits: Highcharts.com" aria-hidden="false">Highcharts.com</text>
+    </svg>

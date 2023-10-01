@@ -1,14 +1,14 @@
 export interface SpritesMap {
-  weather: "sun" | "moon-star";
   arrows: "chevron-selector-vertical";
   general: "check";
+  weather: "moon-star" | "sun";
 }
 export const SPRITES_META = {
-  weather: ["sun", "moon-star"],
   arrows: ["chevron-selector-vertical"],
   general: ["check"],
+  weather: ["moon-star", "sun"],
 } satisfies {
-  weather: Array<"sun" | "moon-star">;
   arrows: Array<"chevron-selector-vertical">;
   general: Array<"check">;
+  weather: Array<"moon-star" | "sun">;
 };

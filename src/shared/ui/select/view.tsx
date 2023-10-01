@@ -5,6 +5,7 @@ import {
   type ChangeEvent,
   type ElementType,
   Fragment,
+  type ReactNode,
   memo,
   useCallback,
   useMemo,
@@ -22,6 +23,7 @@ interface SelectProps<T> {
   onSelect: (value: T) => void;
   template?: ElementType<SelectTemplateProps<T>>;
   templateProps?: Pick<SelectTemplateProps<T>, "displayProperty" | "keyProperty"> & object;
+  notFoundTemplate?: ReactNode;
 }
 
 export function Select<T extends SelectItem>({
@@ -30,6 +32,7 @@ export function Select<T extends SelectItem>({
   onSelect,
   keyProperty,
   displayProperty,
+  notFoundTemplate,
   template: Template = SelectTemplate,
 }: SelectProps<T>) {
   const [query, setQuery] = useState("");
@@ -57,13 +60,13 @@ export function Select<T extends SelectItem>({
   return (
     <Combobox value={selected} onChange={onSelect}>
       <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative w-full cursor-default overflow-hidden rounded-lg  bg-white text-left  sm:text-sm">
           <Combobox.Input
-            className="w-full rounded-lg border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:outline-none focus:ring-0"
+            className="peer w-full rounded-lg border py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 "
             displayValue={handleDisplayValue}
             onChange={handleSearch}
           />
-          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400 hover:text-gray-900">
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-400  hover:text-gray-900 peer-focus:text-gray-900">
             <Icon name="arrows/chevron-selector-vertical" className="h-5 w-5 " aria-hidden="true" />
           </Combobox.Button>
         </div>
@@ -77,7 +80,7 @@ export function Select<T extends SelectItem>({
           <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
             {itemsFiltered.length === 0 && query !== "" ? (
               <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
-                Nothing found.
+                {notFoundTemplate ?? <span className="font-semibold">{t("Nothing found")}</span>}
               </div>
             ) : (
               itemsFiltered.map((item) => (

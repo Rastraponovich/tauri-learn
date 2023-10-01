@@ -61,8 +61,20 @@ const units = [
 ];
 
 const GAP = 0.5;
+const data = [8, 11, 11, 14, 11, 5, 40];
 
 export const DynamicDonutChart = () => {
+  const offsets = data.reduce<number[]>((acc, _, index, arr) => {
+    return [...acc, index >= 1 ? acc[index - 1] - arr[index - 1] : 0];
+  }, []);
+
+  const charts = data.reduce<{ value: number[]; offset: number }[]>((acc, value, index, arr) => {
+    const offset = index >= 1 ? acc[index - 1].offset - arr[index - 1] : 0;
+    return [...acc, { value: [value, 100], offset }];
+  }, []);
+
+  console.log(data, offsets, charts);
+
   return (
     <svg className="chart min-w-[500px]" width="500" height="500" viewBox="0 0 50 50">
       <circle
@@ -84,6 +96,7 @@ interface DonutSliceProps {
   value: number[];
   offset: number;
   r: number;
+  id: number;
 }
 
 const DonutSlice = (props: DonutSliceProps) => {
@@ -99,17 +112,19 @@ const DonutSlice = (props: DonutSliceProps) => {
 
   const strokeDasharray = [props.value[0] - GAP, props.value[1]].join(", ");
   return (
-    <circle
-      className={`${props.color}  animate-[render_0.3s_ease-in-out] cursor-pointer fill-none transition-all duration-300 hover:opacity-80`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      r={props.r}
-      cx={"50%"}
-      cy={"50%"}
-      strokeWidth={hovered ? 12 : 10}
-      strokeDasharray={strokeDasharray}
-      strokeDashoffset={props.offset}
-    />
+    <g>
+      <circle
+        className={`${props.color}  animate-[render_0.3s_ease-in-out] cursor-pointer fill-none transition-all duration-300 hover:opacity-80`}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        r={props.r}
+        cx={"50%"}
+        cy={"50%"}
+        strokeWidth={hovered ? 12 : 10}
+        strokeDasharray={strokeDasharray}
+        strokeDashoffset={props.offset}
+      />
+    </g>
   );
 };
 

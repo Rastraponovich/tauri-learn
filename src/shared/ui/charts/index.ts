@@ -1,1 +1,1 @@
-export { DonutChart } from "./donut";
+export { DynamicDonutChart } from "./donut";

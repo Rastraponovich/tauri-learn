@@ -1,5 +1,5 @@
 import { combine, createEvent, createStore, sample } from "effector";
-import { reset } from "patronum";
+import { debug, reset } from "patronum";
 
 import { Category } from "~/entities/categories/model";
 import { $transactions } from "~/entities/transactions";
@@ -92,6 +92,49 @@ export const $charts = $transactions.map((transactions) => {
     },
   );
 });
+
+type ChartData = {
+  id: number;
+  color: string;
+  amount: number;
+  percentage: number;
+  offset: number;
+  name: string;
+};
+
+export const $chartData = $transactions.map((transactions) => {
+  const total = transactions.reduce((total, transaction) => total + transaction.amount, 0);
+
+  const reducedObject = transactions.reduce<Record<string, ChartData>>(
+    (result, transaction, index, arr) => {
+      const percentage = (transaction.amount / total) * 100;
+
+      if (!result[transaction.category.name]) {
+        result[transaction.category.name] = {
+          ...transaction.category,
+          amount: 0,
+          percentage: 0,
+          offset: 0,
+        };
+      }
+      const offset =
+        index >= 1
+          ? (result[transaction.category.name].amount / total) * 100 -
+            (arr[index - 1].amount / total) * 100
+          : 0;
+      result[transaction.category.name].amount += transaction.amount;
+      result[transaction.category.name].percentage += percentage;
+      result[transaction.category.name].offset += offset;
+
+      return result;
+    },
+    {},
+  );
+
+  return Object.values(reducedObject);
+});
+
+debug($chartData);
 
 $amount.on(amountChanged, (_, amount) => Number(amount));
 $date.on(dateChanged, (_, date) => date);

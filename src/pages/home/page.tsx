@@ -10,7 +10,7 @@ import { CategoriesSelect } from "~/entities/categories";
 
 import { Badge } from "~/shared/ui/bage";
 import { Button } from "~/shared/ui/button";
-import { DonutChart } from "~/shared/ui/charts";
+// import { DonutChart } from "~/shared/ui/charts";å
 import { DynamicDonutChart } from "~/shared/ui/charts/donut";
 import { Money } from "~/shared/ui/display";
 import { Icon } from "~/shared/ui/icon";
@@ -23,7 +23,7 @@ import {
   $categoriesList,
   $categoriesSelected,
   $categoriesStats,
-  $charts,
+  $chartData,
   $date,
   $dateEnd,
   $dateStart,
@@ -40,6 +40,8 @@ import {
 
 export const HomePage = () => {
   const { t } = useTranslation();
+
+  const data = useUnit($chartData);
   return (
     <MainLayout>
       <section className="mt-10 flex grow flex-col  gap-10 px-2 text-center dark:text-gray-900">
@@ -49,7 +51,7 @@ export const HomePage = () => {
           </div>
           <div>
             {/* <Chart /> */}
-            <DynamicDonutChart />
+            <DynamicDonutChart data={data.map((d) => d.percentage)} legend={data} />
           </div>
         </section>
         <section className="flex flex-col gap-4 rounded-md bg-gray-50 p-2 shadow-md dark:bg-white">
@@ -180,23 +182,23 @@ const Categories = () => {
   );
 };
 
-const Chart = () => {
-  const reduced = useUnit($charts);
+// const Chart = () => {
+//   const reduced = useUnit($charts);
 
-  const data = {
-    labels: reduced.labels,
-    datasets: [
-      {
-        data: reduced.data,
-        backgroundColor: reduced.backgroundColor,
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverOffset: 4,
-      },
-    ],
-  };
+//   const data = {
+//     labels: reduced.labels,
+//     datasets: [
+//       {
+//         data: reduced.data,
+//         backgroundColor: reduced.backgroundColor,
+//         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+//         hoverOffset: 4,
+//       },
+//     ],
+//   };
 
-  return <DonutChart data={data} title="Categories" />;
-};
+//   return <DonutChart data={data} title="Categories" />;
+// };
 
 const SelectTemplate = memo<SelectTemplateProps<any>>(
   ({ item, active, selected, displayProperty }) => {

@@ -1,98 +1,63 @@
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
-import { t } from "i18next";
-import { forwardRef, useState } from "react";
-import { Doughnut } from "react-chartjs-2";
+import { useState } from "react";
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+import { BACKGROUND_COLORS, GAP, STROKE_COLORS } from "./constants";
+import { getStrokeDashArray } from "./helpers";
 
-interface DonutChartProps {
-  title?: string;
-  data: {
-    labels: string[];
-    datasets: {
-      data: number[];
-      backgroundColor: string[];
-      hoverBackgroundColor: string[];
-      hoverOffset?: number;
-    }[];
-  };
+type ChartData = {
+  id: number;
+  color: string;
+  amount: number;
+  percentage: number;
+  name: string;
+};
+
+interface DynamicDonutChartProps {
+  data: number[];
+  gap?: number;
+  legend: ChartData[];
 }
 
-export const DonutChart = forwardRef<any, DonutChartProps>((props: DonutChartProps, ref) => {
-  return (
-    <Doughnut
-      className="dark:text-white"
-      data={props.data}
-      options={{
-        maintainAspectRatio: false,
-        responsive: true,
-
-        plugins: {
-          legend: {
-            display: true,
-
-            labels: {
-              usePointStyle: true,
-              font: { size: 14, weight: "light" },
-            },
-            title: {
-              display: true,
-              text: t(props.title || ""),
-              font: {
-                size: 16,
-              },
-            },
-          },
-        },
-      }}
-      ref={ref}
-    />
-  );
-});
-
-const units = [
-  { id: 1, color: "stroke-blue-500", value: [8, 100], offset: 0 },
-  { id: 2, color: "stroke-orange-500", value: [11, 100], offset: -8 },
-  { id: 3, color: "stroke-green-500", value: [11, 100], offset: -19 },
-  { id: 4, color: "stroke-yellow-500", value: [14, 100], offset: -30 },
-  { id: 5, color: "stroke-zinc-500", value: [11, 100], offset: -44 },
-  { id: 6, color: "stroke-rose-500", value: [5, 100], offset: -55 },
-  { id: 7, color: "stroke-purple-500", value: [40, 100], offset: -60 },
-];
-
-const GAP = 0.5;
-const data = [8, 11, 11, 14, 11, 5, 40];
-
-export const DynamicDonutChart = () => {
-  const offsets = data.reduce<number[]>((acc, _, index, arr) => {
-    return [...acc, index >= 1 ? acc[index - 1] - arr[index - 1] : 0];
+export const DynamicDonutChart = ({ data, legend }: DynamicDonutChartProps) => {
+  const charts = data.reduce<{ value: number[]; offset: number }[]>((result, value, index, arr) => {
+    const offset = index >= 1 ? result[index - 1].offset - arr[index - 1] : 0;
+    return [...result, { value: [value, 100], offset }];
   }, []);
 
-  const charts = data.reduce<{ value: number[]; offset: number }[]>((acc, value, index, arr) => {
-    const offset = index >= 1 ? acc[index - 1].offset - arr[index - 1] : 0;
-    return [...acc, { value: [value, 100], offset }];
-  }, []);
-
-  console.log(data, offsets, charts);
-
   return (
-    <svg className="chart min-w-[500px]" width="500" height="500" viewBox="0 0 50 50">
-      <circle
-        className={`animate-[render_0.3s_ease-in-out]  cursor-none fill-none transition-all duration-300 `}
-        r={15.9}
-        cx={"50%"}
-        cy={"50%"}
-        strokeWidth={10}
-      />
-      {units.map((unit) => (
-        <DonutSlice key={unit.id} {...unit} r={15.9} />
-      ))}
-    </svg>
+    <div className="flex flex-col gap-2 ">
+      <div className="font-normal dark:text-white">
+        <ul>
+          {legend.map((unit, index) => (
+            <li key={unit.id}>
+              <div className="flex items-center gap-2">
+                <i
+                  className={`${BACKGROUND_COLORS[index]} mx-4 h-2 w-2 rounded-full`}
+                  aria-hidden="true"
+                ></i>
+                <span>{unit.name}:</span>
+                <span className="font-semibold">{unit.amount}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <svg className="chart min-w-[500px]" width="500" height="500" viewBox="0 0 50 50">
+        <circle
+          className={`animate-[render_0.3s_ease-in-out]  cursor-none fill-none transition-all duration-300 `}
+          r={15.9}
+          cx={"50%"}
+          cy={"50%"}
+          strokeWidth={10}
+        />
+        {charts.map((unit, index) => (
+          <DonutSlice key={index} {...unit} id={index} r={15.9} />
+        ))}
+      </svg>
+    </div>
   );
 };
 
 interface DonutSliceProps {
-  color: string;
   value: number[];
   offset: number;
   r: number;
@@ -110,18 +75,18 @@ const DonutSlice = (props: DonutSliceProps) => {
     setHovered(false);
   };
 
-  const strokeDasharray = [props.value[0] - GAP, props.value[1]].join(", ");
   return (
     <g>
       <circle
-        className={`${props.color}  animate-[render_0.3s_ease-in-out] cursor-pointer fill-none transition-all duration-300 hover:opacity-80`}
+        className={`${STROKE_COLORS[props.id]} 
+        animate-[render_0.3s_ease-in-out] cursor-pointer fill-none transition-all duration-300 hover:opacity-80`}
         onMouseEnter={onMouseEnter}
         onMouseLeave={onMouseLeave}
         r={props.r}
         cx={"50%"}
         cy={"50%"}
         strokeWidth={hovered ? 12 : 10}
-        strokeDasharray={strokeDasharray}
+        strokeDasharray={getStrokeDashArray(props.value, GAP)}
         strokeDashoffset={props.offset}
       />
     </g>
